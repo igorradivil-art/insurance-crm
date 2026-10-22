@@ -1,1 +1,30 @@
 
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Пока SQLite — база хранится в файле, ничего устанавливать не нужно.
+// На Шаге 5 (деплой на Vercel) переключимся на PostgreSQL в облаке.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Черновой набросок — детально проработаем на Шаге 3 (CRM-экран).
+model Client {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  phone     String?
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
